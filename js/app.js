@@ -32,9 +32,19 @@ const startGame = () => {
       overlay.style.display = "none";
     }
   });
-
-  // ** Script
-
-  //game begins, start game button enabled
-  startGame();
 };
+
+// Get Random Phrase
+const getRandomPhraseAsArray = (array) => {
+  let random = Math.floor(Math.random() * phrases.length);
+  let randomPhrase = array[random];
+  let phraseArray = Array.from(randomPhrase);
+  //!  console.log(phraseArray);
+  return phraseArray;
+};
+
+// ** Script
+
+//game begins, start game button enabled
+startGame();
+getRandomPhraseAsArray(phrases);
