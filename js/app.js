@@ -90,7 +90,7 @@ function keyListen() {
       checkLetter(letterClicked);
       event.target.className = "chosen";
     }
-    console.log(letterClicked);
+    console.log(letterClicked); // ! remove this before dist
   });
 }
 
