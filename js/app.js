@@ -77,8 +77,7 @@ function checkLetter(letterClicked) {
       match += 1;
     }
   }
-  if (match < 1) {
-  }
+  console.log(match); // ! Change to the CheckWIn Function
 }
 
 // Event Listener for the Keyboard
@@ -86,11 +85,13 @@ function checkLetter(letterClicked) {
 function keyListen() {
   keyboard.addEventListener("click", (event) => {
     let letterClicked = event.target.textContent;
-    if (event.target.className !== "chosen") {
+    if (
+      event.target.className !== "chosen" &&
+      event.target.parentNode.className === "keyrow"
+    ) {
       checkLetter(letterClicked);
       event.target.className = "chosen";
     }
-    console.log(letterClicked); // ! remove this before dist
   });
 }
 
