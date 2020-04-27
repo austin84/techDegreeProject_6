@@ -4,7 +4,8 @@ const keyboard = document.getElementById("qwerty");
 const phraseArea = document.getElementById("phrase");
 const startButton = document.querySelector(".btn_reset");
 const startOverlay = document.getElementById("overlay");
-let hearts = document.getElementsByClassName("tries");
+const resetButton = document.querySelector(".btn_new");
+
 let phrase = "";
 let missed = 0;
 
@@ -34,13 +35,14 @@ const phrases = [
 // ** Functions
 
 // starts event listener for 'start game' button
-const startGame = () => {
+function startGame() {
   startButton.addEventListener("click", (event) => {
     if (startOverlay.style.display !== "none") {
       startOverlay.style.display = "none";
     }
   });
-};
+  addPhraseToDisplay(getRandomPhraseAsArray(phrases));
+}
 
 // Get Random Phrase
 const getRandomPhraseAsArray = (array) => {
@@ -63,23 +65,6 @@ function addPhraseToDisplay(phraseArray) {
   }
 }
 
-// ! Begin Current Work Zone
-
-// ! Currently trying to log whether or not it was a match and manipulate the hearts in the scoreboard.....
-
-// Check to see if letter matches
-function checkLetter(letterClicked) {
-  const letters = document.getElementsByClassName("letter");
-  let match = 0;
-  for (let i = 0; i < letters.length; i++) {
-    if (letterClicked === letters[i].textContent) {
-      letters[i].classList.add("show");
-      match += 1;
-    }
-  }
-  console.log(match); // ! Change to the CheckWIn Function
-}
-
 // Event Listener for the Keyboard
 
 function keyListen() {
@@ -91,15 +76,81 @@ function keyListen() {
     ) {
       checkLetter(letterClicked);
       event.target.className = "chosen";
+      checkWin();
     }
   });
 }
 
-// ! End Currrent Work Zone
+// Check to see if letter matches
+function checkLetter(letterClicked) {
+  let hearts = document.getElementsByClassName("hearts");
+  const letters = document.getElementsByClassName("letter");
+  let match = 0;
+  for (let i = 0; i < letters.length; i++) {
+    if (letterClicked === letters[i].textContent) {
+      letters[i].classList.add("show");
+      match += 1;
+    }
+  }
+  if (match < 1) {
+    hearts[0].src = "images/lostHeart.png";
+    hearts[0].removeAttribute("class");
+    missed += 1;
+  }
+}
+// check win wfucntion
+
+function checkWin() {
+  const letter = document.getElementsByClassName("letter");
+  const show = document.getElementsByClassName("show");
+  const title = document.querySelector(".title");
+  if (letter.length === show.length) {
+    keyboard.removeEventListener("click", keyListen);
+    startOverlay.className = "win";
+    title.textContent = `You got it right! Fantastic Job.... Please try again!`;
+    startButton.textContent = "Restart";
+    startOverlay.style.display = "flex";
+    resetBoard();
+    keyListen();
+    startGame();
+  }
+  if (missed > 4) {
+    keyboard.removeEventListener("click", keyListen);
+    startOverlay.className = "lose";
+    title.textContent = `You have run out of tries... Please try again!`;
+    startButton.textContent = "Restart";
+    startOverlay.style.display = "flex";
+    resetBoard();
+    keyListen();
+    startGame();
+  }
+}
+
+// ! Somewhere around here... after multiple resets, the '.chosen' class is left remaining on the last letter chosen.......
+// ! its either resetBoard(); or checkWin();
+// ! Go through all the code and note each action, make sure all are undone in resetBoard();
+
+//reset board
+
+function resetBoard() {
+  let ul = phraseArea.firstElementChild;
+  ul.innerHTML = "";
+
+  let hearts = document.getElementsByClassName("tries");
+  for (let i = 0; i < hearts.length; i++) {
+    hearts[i].firstElementChild.src = "images/liveHeart.png";
+    hearts[i].firstElementChild.className = "hearts";
+  }
+  let keys = keyboard.getElementsByTagName("button");
+  for (let i = 0; i < keys.length; i++) {
+    keys[i].classList.remove("chosen");
+  }
+  missed = 0;
+}
 
 // ** Script
 
 //game begins, start game button enabled
+
 startGame();
-addPhraseToDisplay(getRandomPhraseAsArray(phrases));
 keyListen();
