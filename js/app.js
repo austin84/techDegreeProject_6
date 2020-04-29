@@ -105,32 +105,26 @@ function checkWin() {
   const show = document.getElementsByClassName("show");
   const title = document.querySelector(".title");
   if (letter.length === show.length) {
-    keyboard.removeEventListener("click", keyListen);
     startOverlay.className = "win";
     title.textContent = `You got it right! Fantastic Job.... Please try again!`;
     startButton.textContent = "Restart";
     startOverlay.style.display = "flex";
-    resetBoard();
-    keyListen();
-    startGame();
+    endGame();
   }
   if (missed > 4) {
-    keyboard.removeEventListener("click", keyListen);
     startOverlay.className = "lose";
     title.textContent = `You have run out of tries... Please try again!`;
     startButton.textContent = "Restart";
     startOverlay.style.display = "flex";
-    resetBoard();
-    keyListen();
-    startGame();
+    endGame();
   }
 }
 
-// ! Somewhere around here... after multiple resets, the '.chosen' class is left remaining on the last letter chosen.......
-// ! its either resetBoard(); or checkWin();
-// ! Go through all the code and note each action, make sure all are undone in resetBoard();
-
 //reset board
+function endGame() {
+  resetBoard();
+  startGame();
+}
 
 function resetBoard() {
   let ul = phraseArea.firstElementChild;
