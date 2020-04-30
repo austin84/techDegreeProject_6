@@ -1,16 +1,12 @@
-// ** Variables
-
+// ** VARIABLES ** //
 const keyboard = document.getElementById("qwerty");
 const phraseArea = document.getElementById("phrase");
 const startButton = document.querySelector(".btn_reset");
 const startOverlay = document.getElementById("overlay");
-const resetButton = document.querySelector(".btn_new");
-
 let phrase = "";
 let missed = 0;
 
-// ** Array of Phrases
-
+// ** ARRAY OF PHRASES ** //
 const phrases = [
   "it will grow on you",
   "please fasten your seat belts",
@@ -44,19 +40,19 @@ const phrases = [
   "variety is the spice of life",
 ];
 
-// ** Functions
+// ** FUNCTIONS ** //
 
-// starts event listener for 'start game' button
-function startGame() {
+// * Starts the event listener for 'Start Game' button
+const startGame = () => {
   startButton.addEventListener("click", (event) => {
     if (startOverlay.style.display !== "none") {
       startOverlay.style.display = "none";
     }
   });
   addPhraseToDisplay(getRandomPhraseAsArray(phrases));
-}
+};
 
-// Get Random Phrase
+// * Randomly chooses a phrase and breaks it into an array
 const getRandomPhraseAsArray = (array) => {
   let random = Math.floor(Math.random() * phrases.length);
   let randomPhrase = array[random];
@@ -64,7 +60,8 @@ const getRandomPhraseAsArray = (array) => {
   return phrase;
 };
 
-function addPhraseToDisplay(phraseArray) {
+// * Breaks the the array into List Items and adds them to the display
+const addPhraseToDisplay = (phraseArray) => {
   for (let i = 0; i < phraseArray.length; i++) {
     let li = document.createElement("li");
     li.innerHTML = phraseArray[i];
@@ -75,11 +72,10 @@ function addPhraseToDisplay(phraseArray) {
     }
     phraseArea.firstElementChild.appendChild(li);
   }
-}
+};
 
-// Event Listener for the Keyboard
-
-function keyListen() {
+// * Adds an Event Listener for the main qwerty keyboard
+const keyListen = () => {
   keyboard.addEventListener("click", (event) => {
     let letterClicked = event.target.textContent;
     if (
@@ -91,10 +87,11 @@ function keyListen() {
       checkWin();
     }
   });
-}
+};
 
-// Check to see if letter matches
-function checkLetter(letterClicked) {
+// * Check to see if the chosen letter matches any of the letters in the phrase.
+// * then makes the appropriate display changes
+const checkLetter = (letterClicked) => {
   let hearts = document.getElementsByClassName("hearts");
   const letters = document.getElementsByClassName("letter");
   let match = 0;
@@ -109,10 +106,10 @@ function checkLetter(letterClicked) {
     hearts[0].removeAttribute("class");
     missed += 1;
   }
-}
-// check win wfucntion
+};
 
-function checkWin() {
+// * Checks to see if the game has been won or lost after each letter selection, if so, the game is ended
+const checkWin = () => {
   const letter = document.getElementsByClassName("letter");
   const show = document.getElementsByClassName("show");
   const title = document.querySelector(".title");
@@ -130,15 +127,16 @@ function checkWin() {
     startOverlay.style.display = "flex";
     endGame();
   }
-}
+};
 
-//reset board
-function endGame() {
+// * Clear the board and begin the next game
+const endGame = () => {
   resetBoard();
   startGame();
-}
+};
 
-function resetBoard() {
+// * Reset the game to its original condition
+const resetBoard = () => {
   let ul = phraseArea.firstElementChild;
   ul.innerHTML = "";
 
@@ -152,11 +150,10 @@ function resetBoard() {
     keys[i].classList.remove("chosen");
   }
   missed = 0;
-}
+};
 
-// ** Script
+// ** SCRIPT ** //
 
-//game begins, start game button enabled
-
+// * Start the Game
 startGame();
 keyListen();
