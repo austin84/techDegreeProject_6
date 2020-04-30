@@ -4,9 +4,9 @@
 /* Variables */
 
 :root {
-  --color-win: #78cf82;
-  --color-lose: #d94545;
-  --color-start: #5b85b7;
+  --color-win: #85d06a;
+  --color-lose: #d06a85;
+  --color-start: #6a85d0;
   --color-neutral: #445069;
   --color-neutral-light: #d2d2d2;
   --color-keys: #37474f;
