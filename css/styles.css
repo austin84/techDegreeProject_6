@@ -8,6 +8,7 @@
   --color-lose: #942c35;
   --color-start: #948b2c;
   --color-background: #c29d5a;
+  --color-header: #4d85be;
   --color-neutral: #445069;
   --color-neutral-light: #d2d2d2;
   --color-letters: #b8b48c;
@@ -77,7 +78,7 @@ button {
 /* Title */
 
 .header {
-  color: var(--color-start);
+  color: var(--color-header);
 }
 
 /* Phrase */
