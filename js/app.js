@@ -129,12 +129,6 @@ const checkWin = () => {
   }
 };
 
-// * Clear the board and begin the next game
-const endGame = () => {
-  resetBoard();
-  startGame();
-};
-
 // * Reset the game to its original condition
 const resetBoard = () => {
   let ul = phraseArea.firstElementChild;
@@ -150,6 +144,12 @@ const resetBoard = () => {
     keys[i].classList.remove("chosen");
   }
   missed = 0;
+};
+
+// * Clear the board and begin the next game
+const endGame = () => {
+  resetBoard();
+  startGame();
 };
 
 // ** SCRIPT ** //
